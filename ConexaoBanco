@@ -6,7 +6,7 @@ public class ConnectionFactory {
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/seu_banco", "usuario", "senha");
+                "jdbc:postgresql://localhost:5432/postgres", "postgreSQL 18", "senha");
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
         }

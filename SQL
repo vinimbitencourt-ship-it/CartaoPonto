@@ -17,7 +17,7 @@ CREATE TABLE registro_ponto (
 );
 
 INSERT INTO departamento (nome) VALUES ('Gestão de Pessoas');
-INSERT INTO funcionario (matricula, nome_completo, id_departamento) VALUES ('123', 'James Gosling', 1);
+INSERT INTO funcionario (matricula, nome_completo, id_departamento) VALUES ('123', 'Vinicius Bitencourt', 1);
 
 INSERT INTO registro_ponto (id_funcionario, data_hora) VALUES (1, '2026-03-10 08:02:00');
 INSERT INTO registro_ponto (id_funcionario, data_hora) VALUES (1, '2026-03-10 12:01:00');

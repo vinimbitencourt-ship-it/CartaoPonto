@@ -1,0 +1,27 @@
+CREATE TABLE departamento (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE funcionario (
+    id SERIAL PRIMARY KEY,
+    matricula VARCHAR(20) UNIQUE NOT NULL,
+    nome_completo VARCHAR(150) NOT NULL,
+    id_departamento INTEGER REFERENCES departamento(id)
+);
+
+CREATE TABLE registro_ponto (
+    id SERIAL PRIMARY KEY,
+    id_funcionario INTEGER REFERENCES funcionario(id),
+    data_hora TIMESTAMP NOT NULL
+);
+
+-- Dados de Teste (Baseado no exemplo do PDF)
+INSERT INTO departamento (nome) VALUES ('Gestão de Pessoas');
+INSERT INTO funcionario (matricula, nome_completo, id_departamento) VALUES ('123', 'James Gosling', 1);
+
+-- Registros para o dia 10/03/2026
+INSERT INTO registro_ponto (id_funcionario, data_hora) VALUES (1, '2026-03-10 08:02:00');
+INSERT INTO registro_ponto (id_funcionario, data_hora) VALUES (1, '2026-03-10 12:01:00');
+INSERT INTO registro_ponto (id_funcionario, data_hora) VALUES (1, '13:05:00'::time + '2026-03-10'::date);
+INSERT INTO registro_ponto (id_funcionario, data_hora) VALUES (1, '17:58:00'::time + '2026-03-10'::date);

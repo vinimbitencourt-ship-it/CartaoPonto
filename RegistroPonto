@@ -1,0 +1,26 @@
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RegistroPontoDAO {
+    public List<Timestamp> buscarRegistrosPorData(int funcionarioId, LocalDate data) {
+        List<Timestamp> registros = new ArrayList<>();
+        String sql = "SELECT data_hora FROM registro_ponto WHERE id_funcionario = ? AND CAST(data_hora AS DATE) = ? ORDER BY data_hora ASC";
+        
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, funcionarioId);
+            stmt.setDate(2, Date.valueOf(data));
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                registros.add(rs.getTimestamp("data_hora"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return registros; [cite: 27, 28]
+    }
+}

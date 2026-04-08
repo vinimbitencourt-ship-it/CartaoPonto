@@ -1,0 +1,41 @@
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+public class RelatorioPontoService {
+    public void gerarRelatorio(int funcionarioId, LocalDate data) {
+        String nomeFunc = "Vinicius Bitencourt";
+        String depto = "Gestão de Pessoas";
+
+        RegistroPontoDAO dao = new RegistroPontoDAO();
+        List<java.sql.Timestamp> registros = dao.buscarRegistrosPorData(funcionarioId, data);
+
+        System.out.println("RELATÓRIO DE PONTO");
+        System.out.println("Funcionário: " + nomeFunc);
+        System.out.println("Departamento: " + depto);
+        System.out.println("Data: " + data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        System.out.println("---------------------------------------");
+        System.out.println("Entrada\tSaída\tHoras");
+
+        Duration totalTrabalhado = Duration.ZERO;
+
+        for (int i = 0; i < registros.size(); i += 2) {
+            if (i + 1 < registros.size()) {
+                LocalDateTime entrada = registros.get(i).toLocalDateTime();
+                LocalDateTime saida = registros.get(i + 1).toLocalDateTime();
+                Duration diff = Duration.between(entrada, saida);
+                totalTrabalhado = totalTrabalhado.plus(diff);
+
+                System.out.printf("%s\t%s\t%02d:%02d\n", 
+                    entrada.toLocalTime(), saida.toLocalTime(), 
+                    diff.toHours(), diff.toMinutesPart());
+            }
+        }
+
+        System.out.println("---------------------------------------");
+        System.out.printf("Total trabalhado: %02d:%02d\n", 
+            totalTrabalhado.toHours(), totalTrabalhado.toMinutesPart()); [cite: 30, 37]
+    }
+}
